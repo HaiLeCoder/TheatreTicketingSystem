@@ -137,12 +137,12 @@ TheatreTicketingSystem/
 ---
 
 ## Màn hình chính
-![alt text](image.png)
+![alt text](docs/images/image.png)
 ## Chức năng chính
 
 ### Chức năng 1 – Quản lý suất diễn (`frmPerformanceMaster`)
 
-![alt text](image-1.png)
+![alt text](docs/images/image-1.png)
 - Xem danh sách suất diễn trong **DataGridView**
 - **Tìm kiếm** theo tên và / hoặc khoảng ngày (check Lọc theo ngày để enable 2 ô chọn ngày)
 - **Thêm mới** suất diễn với form bên phải
@@ -150,7 +150,7 @@ TheatreTicketingSystem/
 - **Xóa** (soft-delete): không xóa nếu còn booking đang hoạt động
 
 ### Chức năng 2 – Đặt vé (`frmBooking`)
-![alt text](image-2.png)
+![alt text](docs/images/image-2.png)
 - Tìm và chọn suất diễn (ComboBox + tìm kiếm)
 - Nhập thông tin khách hàng (tên, phone)
 - Chọn loại ghế: Ghế thường / VIP / Đôi
@@ -158,7 +158,7 @@ TheatreTicketingSystem/
 - Xem danh sách booking: **xác nhận** hoặc **huỷ** booking
 
 ### Chức năng 3 – Gán ghế (`frmSeatAssignment`)
-![alt text](image-3.png)
+![alt text](docs/images/image-3.png)
 
 - Nhập Booking ID → tải thông tin
 - Sơ đồ ghế 10×10 (A–J, 1–10):
