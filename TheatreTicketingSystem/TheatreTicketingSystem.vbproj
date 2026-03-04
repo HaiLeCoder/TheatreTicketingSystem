@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>TheatreTicketingSystem</RootNamespace>
+    <AssemblyName>TheatreTicketingSystem</AssemblyName>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <StartupObject>TheatreTicketingSystem.Program</StartupObject>
+    <Nullable>enable</Nullable>
+    <Optimize>false</Optimize>
+    
+    <Version>1.0.0</Version>
+    <Company>Theatre Ticketing System</Company>
+    <Product>Theatre Ticketing System</Product>
+    <Description>Hệ thống bán vé nhà hát - VB.NET WinForms + PostgreSQL</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Npgsql: PostgreSQL .NET driver -->
+    <PackageReference Include="Npgsql" Version="8.0.3" />
+    <!-- Dapper: Lightweight ORM -->
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <!-- Microsoft.Extensions.Configuration for appsettings.json -->
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

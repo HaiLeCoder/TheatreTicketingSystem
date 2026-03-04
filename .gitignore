@@ -1,0 +1,65 @@
+## ── .NET Build output ──────────────────────────────────────────────────────
+bin/
+obj/
+out/
+
+## ── .NET publish output ─────────────────────────────────────────────────────
+publish/
+*.nupkg
+*.snupkg
+
+## ── Visual Studio & Rider ───────────────────────────────────────────────────
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.userprefs
+*.DotSettings
+*.DotSettings.user
+
+## ── Rider & ReSharper ───────────────────────────────────────────────────────
+_ReSharper*/
+*.ReSharper
+*.resharper
+
+## ── Database credentials – NEVER commit passwords ───────────────────────────
+# appsettings.json chứa connection string → dùng appsettings.local.json thay thế
+# Uncomment dòng dưới nếu bạn muốn loại trừ toàn bộ appsettings.json:
+# appsettings.json
+
+# File override local (chứa password thật – không commit)
+appsettings.local.json
+appsettings.*.local.json
+secrets.json
+
+## ── macOS ───────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+## ── Windows ─────────────────────────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+## ── Logs ────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+## ── NuGet ────────────────────────────────────────────────────────────────────
+.nuget/
+packages/
+*.lock.json
+!packages.lock.json
+
+## ── Test results ─────────────────────────────────────────────────────────────
+TestResults/
+coverage/
+*.trx
+*.coverage
+.agent/
