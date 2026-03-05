@@ -7,10 +7,8 @@ Imports TheatreTicketingSystem.Utils
 Namespace Repositories
 
     ''' <summary>
-    ''' Repository for seat assignment operations.
-    ''' RC-005 FIX: SaveAssignments now catches NpgsqlException SqlState 23505
-    '''             (unique violation) and converts to friendly SeatConflictException.
-    ''' RC-009 FIX: All public methods wrapped with NpgsqlException handling.
+    ''' Repository cho các thao tác gán ghế.
+    ''' Tất cả các phương thức công khai được sử dụng NpgsqlException.
     ''' </summary>
     Public Class SeatAssignmentRepository
 
@@ -96,10 +94,8 @@ Namespace Repositories
         ' ── Commands ──────────────────────────────────────────────────────────
 
         ''' <summary>
-        ''' Saves seat assignments atomically (DELETE existing + INSERT new) in one transaction.
-        ''' RC-005 FIX: Catches unique-constraint violation (SQLSTATE 23505) inside the
-        '''             transaction and throws SeatConflictException with a clear message,
-        '''             instead of leaking raw NpgsqlException to the UI.
+        ''' Lưu các bản gán ghế một cách nguyên tử (DELETE hiện tại + INSERT mới) trong một transaction.
+        ''' Bắt vi phạm ràng buộc duy nhất (SQLSTATE 23505) bên trong transaction và ném SeatConflictException với thông báo rõ ràng.
         ''' </summary>
         Public Sub SaveAssignments(bookingId As Integer,
                                    performanceId As Integer,
@@ -133,7 +129,7 @@ Namespace Repositories
                             tx.Commit()
 
                         Catch ex As NpgsqlException When ex.SqlState = SQLSTATE_UNIQUE_VIOLATION
-                            ' RC-005 FIX: Rollback & raise friendly error instead of crashing
+                            ' Rollback và đưa ra message lỗi thay vì làm treo chương trình
                             tx.Rollback()
                             Throw New SeatConflictException(
                                 "Một hoặc nhiều ghế bạn chọn vừa được booking khác đặt trước." &

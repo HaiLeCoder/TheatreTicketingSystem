@@ -7,9 +7,9 @@ Imports TheatreTicketingSystem.Utils
 Namespace Repositories
 
     ''' <summary>
-    ''' Repository for the "seat_types" lookup table.
-    ''' RC-009 FIX: Added NpgsqlException handling.
-    ''' RC-013 FIX: In-memory cache now expires after CACHE_TTL_MINUTES.
+    ''' Repository cho bảng tra cứu "seat_types".
+    ''' Đã thêm xử lý ngoại lệ Npgsql.
+    ''' Bộ nhớ đệm in-memory hiện hết hạn sau CACHE_TTL_MINUTES.
     ''' </summary>
     Public Class SeatTypeRepository
 
@@ -17,7 +17,7 @@ Namespace Repositories
         Private Shared ReadOnly _lock As New Object()
 
         Private _cachedTypes As List(Of SeatType)
-        ' RC-013 FIX: Track when the cache was populated
+        ' Theo dõi thời điểm bộ nhớ đệm được điền dữ liệu
         Private _cacheLoadedAt As DateTime = DateTime.MinValue
         Private Const CACHE_TTL_MINUTES As Integer = 60
 
@@ -38,11 +38,10 @@ Namespace Repositories
         End Property
 
         ''' <summary>
-        ''' Returns all seat types.
-        ''' RC-013 FIX: Cache expires after 60 minutes so DB changes are eventually reflected.
+        ''' Bộ nhớ đệm hết hạn sau 60 phút để đảm bảo các thay đổi trong DB được phản ánh.
         ''' </summary>
         Public Function GetAll() As List(Of SeatType)
-            ' RC-013 FIX: Check TTL before returning cached data
+            ' Kiểm tra TTL trước khi trả về dữ liệu lưu trong bộ nhớ đệm
             Dim cacheAge = (DateTime.Now - _cacheLoadedAt).TotalMinutes
             If _cachedTypes IsNot Nothing AndAlso cacheAge < CACHE_TTL_MINUTES Then
                 Return _cachedTypes

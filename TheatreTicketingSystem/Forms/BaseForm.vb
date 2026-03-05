@@ -5,14 +5,14 @@ Namespace Forms
 
     ''' <summary>
     ''' Base form class that centralises shared UI helpers and messaging.
-    ''' RC-016 FIX: Eliminates duplicate helper methods across frmPerformanceMaster,
-    '''             frmBooking, and frmSeatAssignment.
-    ''' RC-017 FIX: Shared Font instances created once, disposed with form.
+    ''' Loại bỏ các phương thức bổ trợ trùng lặp giữa frmPerformanceMaster,
+    ''' frmBooking và frmSeatAssignment.
+    ''' Các instance Font dùng chung được tạo một lần, giải phóng cùng form.
     ''' </summary>
     Public MustInherit Class BaseForm
         Inherits Form
 
-        ' ── Shared Font instances (RC-017: created once, not per-control) ──────
+        ' ── Các instance Font dùng chung (được tạo một lần, không tạo theo từng control) ──
         Protected ReadOnly FontNormal    As New Font("Segoe UI", 9.5F)
         Protected ReadOnly FontBold      As New Font("Segoe UI", 9.5F, FontStyle.Bold)
         Protected ReadOnly FontSmall     As New Font("Segoe UI", 8.0F)
@@ -143,7 +143,7 @@ Namespace Forms
                                    MessageBoxIcon.Question) = DialogResult.Yes
         End Function
 
-        ' ── Dispose shared fonts (RC-017) ──────────────────────────────────────
+        ' ── Giải phóng các font dùng chung ──────────────────────────────────────
 
         Protected Overrides Sub Dispose(disposing As Boolean)
             If disposing Then

@@ -8,12 +8,11 @@ Namespace Forms
 
     ''' <summary>
     ''' frmSeatAssignment – Chức năng 3: Gán ghế theo sơ đồ 10×10
-    ''' RC-004 FIX: Booking ID parsed once with TryParse into a local variable.
-    ''' RC-005 FIX: Catches SeatConflictException separately with friendly message.
-    ''' RC-016 FIX: Inherits BaseForm.
+    ''' Đã xử lý bắt lỗi SeatConflictException riêng biệt với thông báo thân thiện.
+    ''' Kế thừa từ BaseForm.
     ''' </summary>
     Public Class frmSeatAssignment
-        Inherits BaseForm   ' RC-016
+        Inherits BaseForm
 
         Private ReadOnly _seatService    As SeatAssignmentService = SeatAssignmentService.Instance
         Private ReadOnly _bookingService As BookingService        = BookingService.Instance
@@ -225,7 +224,7 @@ Namespace Forms
             dgvAssigned.Location     = New Point(15, 265)
             dgvAssigned.Size         = New Size(350, 355)
             dgvAssigned.Anchor       = AnchorStyles.Top Or AnchorStyles.Bottom
-            StyleGrid(dgvAssigned)   ' RC-016: BaseForm helper
+            StyleGrid(dgvAssigned)   ' Sử dụng helper từ BaseForm
 
             Dim colSeat As New DataGridViewTextBoxColumn()
             colSeat.HeaderText = "Ghế" : colSeat.FillWeight = 50
@@ -240,7 +239,7 @@ Namespace Forms
         ' ── Load Booking ──────────────────────────────────────────────────────
 
         Private Sub LoadBooking()
-            ' RC-004 FIX: Parse once, use the local variable bookingId everywhere
+            ' Parse một lần, sử dụng biến cục bộ bookingId ở mọi nơi
             Dim bookingId As Integer
             If Not Integer.TryParse(txtBookingId.Text.Trim(), bookingId) OrElse bookingId <= 0 Then
                 ShowWarning("Vui lòng nhập Booking ID hợp lệ (số nguyên dương).")
@@ -369,7 +368,7 @@ Namespace Forms
             Catch ex As InvalidOperationException
                 ShowWarning(ex.Message)
             Catch ex As SeatConflictException
-                ' RC-005 FIX: Friendly message for race-condition seat conflict
+                ' Thông báo thân thiện cho xung đột ghế (race-condition)
                 ShowWarning(ex.Message)
             Catch ex As Exception
                 ShowError("Lỗi lưu ghế", ex)

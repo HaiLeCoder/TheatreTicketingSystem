@@ -7,9 +7,8 @@ Imports TheatreTicketingSystem.Utils
 Namespace Repositories
 
     ''' <summary>
-    ''' Repository for CRUD operations on the "performances" table.
-    ''' RC-009 FIX: All public methods now wrap NpgsqlException in DataAccessException.
-    ''' All SQL is parameterised to prevent SQL injection.
+    ''' Repository cho các thao tác CRUD trên bảng "performances".
+    ''' Tất cả SQL đều được tham số hóa để ngăn chặn SQL injection.
     ''' </summary>
     Public Class PerformanceRepository
 
@@ -82,7 +81,7 @@ Namespace Repositories
 
             If fromDate.HasValue Then
                 sql.Append(" AND start_time >= @FromDate")
-                ' RC-021: Explicitly handle DateTimeKind for Npgsql compatibility
+                ' Xử lý rõ ràng DateTimeKind để tương thích với Npgsql
                 params.Add("FromDate", fromDate.Value.ToUniversalTime())
             End If
 

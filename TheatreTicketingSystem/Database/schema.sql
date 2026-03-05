@@ -1,10 +1,10 @@
 -- ============================================================
 -- Theatre Ticketing System - Safe CREATE Schema
--- Version: 1.1.0 (Post RC-019 Fix)
--- Purpose: Idempotent schema creation – safe to run on production.
---          Use schema_reset.sql ONLY in dev/test to wipe data.
--- RC-019 FIX: Removed DROP TABLE CASCADE statements.
---             Uses CREATE TABLE IF NOT EXISTS instead.
+-- Phiên bản: 1.1.0
+-- Mục đích: Tạo schema an toàn (idempotent) – an toàn khi chạy trên môi trường thực tế (production).
+--          CHỈ sử dụng schema_reset.sql trong môi trường dev/test để xóa trắng dữ liệu.
+-- Đã loại bỏ các câu lệnh DROP TABLE CASCADE.
+-- Sử dụng CREATE TABLE IF NOT EXISTS để thay thế.
 -- ============================================================
 
 -- ============================================================

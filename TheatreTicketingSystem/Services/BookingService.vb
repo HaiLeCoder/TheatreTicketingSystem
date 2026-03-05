@@ -5,8 +5,8 @@ Imports TheatreTicketingSystem.Repositories
 Namespace Services
 
     ''' <summary>
-    ''' Business logic for creating and managing ticket bookings.
-    ''' RC-015 FIX: Added phone number format validation.
+    ''' Logic nghiệp vụ cho việc tạo và quản lý booking vé.
+    ''' Đã thêm xác thực định dạng số điện thoại.
     ''' </summary>
     Public Class BookingService
 
@@ -16,7 +16,7 @@ Namespace Services
         Private ReadOnly _bookingRepo  As BookingRepository
         Private ReadOnly _seatTypeRepo As SeatTypeRepository
 
-        ' RC-015: Phone regex – accepts 8–15 digits, optional leading + or spaces/dashes
+        ' Regex số điện thoại – chấp nhận 8–15 chữ số, tùy chọn bắt đầu bằng + hoặc có dấu cách/gạch ngang
         Private Shared ReadOnly PhoneRegex As New Regex(
             "^[\+]?[0-9]{8,15}$",
             RegexOptions.Compiled)
@@ -68,8 +68,8 @@ Namespace Services
         ' ── Commands ──────────────────────────────────────────────────────────
 
         ''' <summary>
-        ''' Creates a new booking, automatically calculating total amount.
-        ''' RC-015 FIX: Validates phone number format before saving.
+        ''' Tạo booking mới, tự động tính tổng tiền.
+        ''' Xác thực định dạng số điện thoại trước khi lưu.
         ''' </summary>
         Public Function Create(b As Booking) As Booking
             ValidateBooking(b)
@@ -118,7 +118,7 @@ Namespace Services
                 Throw New ArgumentException("Tên khách hàng không vượt quá 200 ký tự.")
             End If
 
-            ' RC-015 FIX: Validate phone format
+            ' Xác thực định dạng số điện thoại
             If Not String.IsNullOrEmpty(b.CustomerPhone) Then
                 Dim cleanPhone = b.CustomerPhone.Replace(" ", "").Replace("-", "")
                 If Not PhoneRegex.IsMatch(cleanPhone) Then

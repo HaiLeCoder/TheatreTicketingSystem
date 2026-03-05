@@ -9,7 +9,7 @@ Namespace Forms
     ''' Acts as navigation hub (MDI-style or tabbed navigation).
     ''' </summary>
     Public Class frmMain
-        Inherits BaseForm   ' RC-016: Inherit BaseForm
+        Inherits BaseForm   ' Kế thừa từ BaseForm
 
         ' ── Controls ──────────────────────────────────────────────────────────
         Private WithEvents btnPerformances As Button
@@ -141,7 +141,7 @@ Namespace Forms
         End Sub
 
         Private Sub LoadChildForm(childForm As Form)
-            ' RC-018 FIX: Dispose previous child forms to prevent GDI/memory leaks
+            ' Giải phóng các form con trước đó để ngăn rò rỉ GDI/memory
             For Each ctrl In pnlContent.Controls.Cast(Of Control)().ToList()
                 ctrl.Dispose()
             Next

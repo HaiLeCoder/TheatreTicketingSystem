@@ -9,10 +9,10 @@ Namespace Forms
 
     ''' <summary>
     ''' frmBooking – Chức năng 2: Đặt vé / quản lý booking
-    ''' RC-016 FIX: Inherits BaseForm – removed duplicate helper methods.
+    ''' Kế thừa từ BaseForm – loại bỏ các phương thức bổ trợ trùng lặp.
     ''' </summary>
     Public Class frmBooking
-        Inherits BaseForm   ' RC-016
+        Inherits BaseForm
 
         Private ReadOnly _bookingService     As BookingService     = BookingService.Instance
         Private ReadOnly _performanceService As PerformanceService = PerformanceService.Instance
@@ -210,7 +210,7 @@ Namespace Forms
             dgvBookings.Size     = New Size(636, 560)
             dgvBookings.Anchor   = AnchorStyles.Top Or AnchorStyles.Bottom Or
                                    AnchorStyles.Left Or AnchorStyles.Right
-            StyleGrid(dgvBookings)  ' RC-016: BaseForm helper
+            StyleGrid(dgvBookings)  ' Sử dụng helper từ BaseForm
 
             Dim bookingCols As (Name As String, Hdr As String, W As Integer)() = {
                 ("Id",              "ID",          35),

@@ -8,12 +8,12 @@ Namespace Forms
 
     ''' <summary>
     ''' frmPerformanceMaster – Chức năng 1: Quản lý suất diễn
-    ''' RC-006 FIX: SelectionChanged now calls _service.GetById() instead of
-    '''             _service.GetAll().FirstOrDefault(), eliminating the N+1 query.
-    ''' RC-016 FIX: Inherits BaseForm – no more duplicate helper methods.
+    ''' SelectionChanged hiện gọi _service.GetById() thay vì
+    ''' _service.GetAll().FirstOrDefault(), loại bỏ truy vấn N+1.
+    ''' Kế thừa từ BaseForm – loại bỏ các phương thức bổ trợ trùng lặp.
     ''' </summary>
     Public Class frmPerformanceMaster
-        Inherits BaseForm   ' RC-016: Inherit shared helpers
+        Inherits BaseForm   ' Kế thừa các helper chung
 
         ' ── Services ──────────────────────────────────────────────────────────
         Private ReadOnly _service As PerformanceService = PerformanceService.Instance
@@ -116,7 +116,7 @@ Namespace Forms
 
             dgvList = New DataGridView()
             dgvList.Dock = DockStyle.Fill
-            StyleGrid(dgvList)   ' RC-016: use BaseForm helper
+            StyleGrid(dgvList)   ' Sử dụng helper từ BaseForm
 
             Dim cols As (Name As String, Header As String, FillW As Integer)() = {
                 ("Id",              "ID",          40),
@@ -308,7 +308,7 @@ Namespace Forms
             Dim selectedId = CInt(dgvList.SelectedRows(0).Cells("Id").Value)
             Try
                 ' RC-006 FIX: Use GetById (1 query) instead of GetAll().FirstOrDefault (N+1)
-                ' RC-020 FIX: Enable editing instantly upon selection
+                ' Kích hoạt chỉnh sửa ngay lập tức khi chọn
                 _selectedPerformance = _service.GetById(selectedId)
                 If _selectedPerformance IsNot Nothing Then
                     BindFormTo(_selectedPerformance)

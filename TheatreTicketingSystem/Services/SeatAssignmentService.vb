@@ -5,9 +5,8 @@ Imports TheatreTicketingSystem.Utils
 Namespace Services
 
     ''' <summary>
-    ''' Business logic for seat assignment.
-    ''' RC-005 FIX: SaveAssignments now lets SeatConflictException bubble up
-    '''             so the UI can display a friendly message for race conditions.
+    ''' Logic nghiệp vụ cho việc gán ghế.
+    ''' Để SeatConflictException nổi lên để UI có thể hiển thị thông báo thân thiện cho các trường hợp race condition.
     ''' </summary>
     Public Class SeatAssignmentService
 
@@ -71,16 +70,15 @@ Namespace Services
         ' ── Commands ──────────────────────────────────────────────────────────
 
         ''' <summary>
-        ''' Saves seat assignments for a booking.
-        ''' Business rules:
-        '''   1. Seat count must exactly equal booking's ticket_count.
-        '''   2. No seat may already be taken by another booking (same performance).
+        ''' Lưu các bản gán ghế cho một booking.
+        ''' Quy tắc nghiệp vụ:
+        '''   1. Số lượng ghế phải khớp chính xác với ticket_count của booking.
+        '''   2. Không ghế nào được phép đã bị đặt bởi một booking khác (cùng suất diễn).
         '''
-        ''' RC-005 FIX:
-        '''   - Application-layer collision check (Rule 2) catches the common case.
-        '''   - SeatConflictException from Repository (SQLSTATE 23505) catches the
-        '''     rare race-condition case where two users select the same seat concurrently.
-        '''   Both result in a user-friendly InvalidOperationException-like message.
+        ''' Xử lý xung đột:
+        '''   - Kiểm tra xung đột ở lớp Application (Quy tắc 2) bắt các trường hợp thông thường.
+        '''   - SeatConflictException từ Repository (SQLSTATE 23505) bắt trường hợp race-condition
+        '''     hiếm gặp khi hai người dùng chọn cùng một ghế đồng thời.
         ''' </summary>
         Public Sub SaveAssignments(bookingId As Integer,
                                    seats As List(Of SeatAssignment))
@@ -117,8 +115,8 @@ Namespace Services
                 sa.BookingId     = bookingId
             Next
 
-            ' RC-005: SeatConflictException (DB UNIQUE violation) propagates here
-            '         and is caught separately in frmSeatAssignment.SaveAssignments().
+            ' SeatConflictException (DB UNIQUE violation) lan truyền đến đây
+            ' và được bắt riêng biệt trong frmSeatAssignment.SaveAssignments().
             _assignRepo.SaveAssignments(bookingId, booking.PerformanceId, seats)
         End Sub
 

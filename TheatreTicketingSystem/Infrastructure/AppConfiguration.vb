@@ -4,9 +4,7 @@ Namespace Infrastructure
 
     ''' <summary>
     ''' Centralised application configuration.
-    ''' Reads from appsettings.json – NEVER access raw environment variables directly.
-    ''' Principle: Single Source of Truth for all config values.
-    ''' RC-003 FIX: Removed C#-only ?? operator; replaced with VB.NET If() idiom.
+    ''' Được xây dựng dựa trên appsettings.json – KHÔNG truy cập trực tiếp các biến môi trường thô.
     ''' </summary>
     Public NotInheritable Class AppConfiguration
 
@@ -24,7 +22,6 @@ Namespace Infrastructure
             builder.AddJsonFile("appsettings.json", optional:=False, reloadOnChange:=False)
             _config = builder.Build()
 
-            ' RC-003 FIX: VB.NET uses If() not ?? for null-coalescing
             Dim cs = _config.GetConnectionString("DefaultConnection")
             If cs Is Nothing OrElse cs.Trim().Length = 0 Then
                 Throw New InvalidOperationException(
@@ -51,7 +48,6 @@ Namespace Infrastructure
 
         ''' <summary>Returns an arbitrary config value by key path.</summary>
         Public Function GetValue(key As String) As String
-            ' RC-003 FIX: Use If() instead of ??
             Return If(_config(key), String.Empty)
         End Function
 

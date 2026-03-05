@@ -7,19 +7,15 @@ Imports TheatreTicketingSystem.Utils
 Namespace Repositories
 
     ''' <summary>
-    ''' Repository for CRUD operations on the "bookings" table.
-    ''' RC-001 FIX: Removed dead Const sql with non-existent ::booking_status_type cast.
-    ''' RC-002 FIX: Removed invalid splitOn:="" from single-type Dapper query.
-    ''' RC-007 FIX: UpdateStatus now uses Dapper uniformly; removed dead Const sql.
-    ''' RC-009 FIX: Added NpgsqlException handling in all public methods.
-    ''' RC-011 FIX: Extracted BASE_BOOKING_SELECT constant – no more copy-paste SQL.
+    ''' Repository cho các thao tác CRUD trên bảng "bookings".
+    ''' Trích xuất hằng số BASE_BOOKING_SELECT để tái sử dụng SQL.
     ''' </summary>
     Public Class BookingRepository
 
         Private Shared _instance As BookingRepository
         Private Shared ReadOnly _lock As New Object()
 
-        ' RC-011 FIX: Single source of truth for the SELECT projection
+        ' Nguồn Sự Thật Duy Nhất cho projection SELECT
         Private Const BASE_BOOKING_SELECT As String =
             "SELECT b.id, b.performance_id AS PerformanceId, b.seat_type_id AS SeatTypeId," &
             "       b.customer_name AS CustomerName, b.customer_phone AS CustomerPhone," &
@@ -51,11 +47,11 @@ Namespace Repositories
 
         ''' <summary>Returns all bookings with joined data.</summary>
         Public Function GetAll() As List(Of Booking)
-            ' RC-011: Use shared BASE_BOOKING_SELECT
+            ' Sử dụng BASE_BOOKING_SELECT dùng chung
             Dim sql = BASE_BOOKING_SELECT & "ORDER BY b.created_at DESC"
             Try
                 Using conn = DatabaseFactory.Instance.CreateConnection()
-                    ' RC-002 FIX: No splitOn for single-type Query
+                    ' Không sử dụng splitOn cho Query đơn kiểu
                     Return conn.Query(Of Booking)(sql).AsList()
                 End Using
             Catch ex As NpgsqlException
@@ -94,9 +90,7 @@ Namespace Repositories
         ' ── Commands ──────────────────────────────────────────────────────────
 
         ''' <summary>
-        ''' Inserts a new booking and returns the generated ID.
-        ''' RC-001 FIX: Removed dead Const sql with non-existent ::booking_status_type.
-        ''' Uses plain VARCHAR which matches the CHECK constraint in schema.
+        ''' Thêm booking mới và trả về ID được tạo.
         ''' </summary>
         Public Function Create(b As Booking) As Integer
             Try
@@ -126,8 +120,8 @@ Namespace Repositories
         End Function
 
         ''' <summary>
-        ''' Updates booking status.
-        ''' RC-007 FIX: Uses Dapper uniformly; removed dead/inconsistent Const sql.
+        ''' Cập nhật trạng thái booking.
+        ''' Sử dụng Dapper một cách đồng nhất.
         ''' </summary>
         Public Sub UpdateStatus(id As Integer, status As BookingStatus)
             Const sql As String = "UPDATE bookings SET status = @Status WHERE id = @Id"
